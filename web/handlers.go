@@ -1,8 +1,8 @@
-package main
+package web
 
 import (
-	"./components"
-	"./generator"
+	"../components"
+	"../generator"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func getPassword(w http.ResponseWriter, r *http.Request) {
+func GetPassword(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	minLength := components.ConvertToInt(params["min"])
@@ -19,7 +19,7 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 	noPasswords := components.ConvertToInt(params["passwords"])
 
 	if minLength == 0 || noNumbers == 0 || noSymbols == 0 || noPasswords == 0 {
-		validationError(w, r)
+		ValidationError(w, r)
 		return
 	}
 
@@ -28,7 +28,7 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 		data, err := generator.GeneratePassword(minLength, noNumbers, noSymbols)
 		if err != nil {
 			log.Print(err)
-			serverError(w, r)
+			ServerError(w, r)
 			return
 		} else {
 			passwords[i] = data
@@ -39,7 +39,7 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(passwords)
 }
 
-func notFoundError(w http.ResponseWriter, r *http.Request) {
+func NotFoundError(w http.ResponseWriter, r *http.Request) {
 	data := map[string]string{
 		"error":   "Not Found",
 		"type":    "404",
@@ -50,7 +50,7 @@ func notFoundError(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 
-func validationError(w http.ResponseWriter, r *http.Request) {
+func ValidationError(w http.ResponseWriter, r *http.Request) {
 	data := map[string]string{
 		"error":   "Validation Error",
 		"type":    "422",
@@ -61,7 +61,7 @@ func validationError(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 
-func serverError(w http.ResponseWriter, r *http.Request) {
+func ServerError(w http.ResponseWriter, r *http.Request) {
 	data := map[string]string{
 		"error":   "Server Error",
 		"type":    "500",

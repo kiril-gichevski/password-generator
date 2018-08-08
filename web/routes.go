@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"github.com/gorilla/mux"
@@ -33,6 +33,6 @@ var routes = Routes{
 		"passwords",
 		"GET",
 		"/password/{min}/{numbers}/{symbols}/{passwords}",
-		getPassword,
+		GetPassword,
 	},
 }
