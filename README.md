@@ -21,7 +21,7 @@ The main.go file has is only starting the server.
 The routes definition and the route handlers are in a separate files so we can enable separation of concerns.  
 Just imagine if you have an API with more than a 100 routes. This way it is simple to maintain the codebase  
 
-### web.routes.go
+### web/routes.go
 The routes file is a small wrapper around the [mux](github.com/gorilla/mux) router.   
 We provide a Routes structure:   
 ```
@@ -34,7 +34,7 @@ type Route struct {
 ```
 where the name, method, pattern and the handler function itself can be defined. It is completely flexible to extend.   
 
-### web.handlers.go
+### web/handlers.go
 The handlers file contains all the handlers needed for the API.   
 
 #### getPassword handler
