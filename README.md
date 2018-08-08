@@ -32,7 +32,7 @@ type Route struct {
     HandlerFunc http.HandlerFunc
 }
 ```
-where the name, method and pattern can be defined. It is completely flexible to extend.   
+where the name, method, pattern and the handler function itself can be defined. It is completely flexible to extend.   
 
 ### handlers.go
 The handlers file contains all the handlers needed for the API.   
@@ -64,8 +64,9 @@ and ```SetJsonHeader``` function that sets the http headers
 The password_generator is the main part that actually generates the password.   
 First we create 3 slices, one for letters, one for numbers and one for special characters/symbols.   
 The length of the slices is defined by the user input through the http endpoint described earlier.   
-For the `letters` slice we have a randomly conversion from vowels characters to numbers. When we convert a vowel to number   
-we subtract the length of the `numbers` slice so we end up with exactly the same number of integers defined by the user.   
+For the `letters` slice we have a randomly conversion from vowels characters to numbers.    
+When we convert a vowel to number we subtract the length of the `numbers` slice    
+so we end up with exactly the same number of integers defined by the user.   
 At the end we join all the slices in one resulting slice. After that the resulting slice is shuffled.   
 The complexity of the algorithm is 3 O(n).   
 Once we iterate through the full length when we assign the values of the separate slices,   
