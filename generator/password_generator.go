@@ -12,9 +12,10 @@ const (
 	symbols = "~!@#$%^&*()_+`-={}|[]\\:\"<>?,./"
 )
 
-func GeneratePassword(minLength int, numbers int, specialChars int) string {
+func GeneratePassword(minLength int, numbers int, specialChars int) (string, error) {
 	lettersList := make([]string, minLength)
 
+	// build the Letters list
 	LettersLength := len(letters)
 	for i := 0; i < minLength; i++ {
 		Letter := string(letters[rand.Intn(LettersLength)])
@@ -26,17 +27,20 @@ func GeneratePassword(minLength int, numbers int, specialChars int) string {
 		}
 	}
 
+	// build the Numbers list
 	numbersList := make([]string, numbers)
 	for i := 0; i < numbers; i++ {
 		numbersList[i] = strconv.Itoa(rand.Intn(10))
 	}
 
+	// build the Symbols list
 	symbolsList := make([]string, specialChars)
 	symbolsLength := len(symbols)
 	for i := 0; i < specialChars; i++ {
 		symbolsList[i] = string(symbols[rand.Intn(symbolsLength)])
 	}
 
+	// join the lists and shuffle the resulting/joined lists
 	if len(numbersList) > 0 {
 		LettersAndNumbersList := append(lettersList, numbersList...)
 		return shuffleAndConvertToString(append(LettersAndNumbersList, symbolsList...))
@@ -81,7 +85,7 @@ func shuffle(slice []string) {
 	}
 }
 
-func shuffleAndConvertToString(passwordList []string) string {
+func shuffleAndConvertToString(passwordList []string) (string, error) {
 	shuffle(passwordList)
-	return strings.Join(passwordList, "")
+	return strings.Join(passwordList, ""), nil
 }
