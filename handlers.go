@@ -23,8 +23,6 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	components.SetJsonHeader(w, http.StatusCreated)
-
 	passwords := make([]string, noPasswords)
 	for i := 0; i < noPasswords; i++ {
 		data, err := generator.GeneratePassword(minLength, noNumbers, noSymbols)
@@ -37,38 +35,39 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	components.SetJsonHeader(w, http.StatusOK)
 	json.NewEncoder(w).Encode(passwords)
 }
 
 func notFoundError(w http.ResponseWriter, r *http.Request) {
-	components.SetJsonHeader(w, http.StatusNotFound)
-
 	data := map[string]string{
 		"error":   "Not Found",
 		"type":    "404",
 		"message": fmt.Sprintf("The defined route '%s' has not been found", r.URL.Path),
 	}
+
+	components.SetJsonHeader(w, http.StatusNotFound)
 	json.NewEncoder(w).Encode(data)
 }
 
 func validationError(w http.ResponseWriter, r *http.Request) {
-	components.SetJsonHeader(w, http.StatusUnprocessableEntity)
-
 	data := map[string]string{
 		"error":   "Validation Error",
 		"type":    "422",
 		"message": "The defined params are not valid or not allowed",
 	}
+
+	components.SetJsonHeader(w, http.StatusUnprocessableEntity)
 	json.NewEncoder(w).Encode(data)
 }
 
 func serverError(w http.ResponseWriter, r *http.Request) {
-	components.SetJsonHeader(w, http.StatusInternalServerError)
-
 	data := map[string]string{
 		"error":   "Server Error",
 		"type":    "500",
 		"message": "Unable to process the request",
 	}
+
+	components.SetJsonHeader(w, http.StatusInternalServerError)
 	json.NewEncoder(w).Encode(data)
 }
