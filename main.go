@@ -29,6 +29,7 @@ func getPassword(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < noPasswords; i++ {
 		data, err := generator.GeneratePassword(minLength, noNumbers, noSymbols)
 		if err != nil {
+			log.Print(err)
 			serverError(w, r)
 			return
 		} else {
