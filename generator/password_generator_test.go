@@ -8,15 +8,25 @@ import (
 
 func TestShuffle(t *testing.T) {
 	list := []string{"1", "2", "3", "4"}
+	tmp := make([]string, len(list))
+	copy(tmp, list)
+
+	// check length
 	shuffle(list)
 	if len(list) != 4 {
 		t.Errorf("Shuffle changed list size")
 	}
 
+	// check if all elements are in the shuffled list
 	for _, element := range list {
 		if contains(list, element) != true {
 			t.Errorf("Element not in shuffled array")
 		}
+	}
+
+	// check the order of the elements
+	if strings.Join(list, "") == strings.Join(tmp, "") {
+		t.Errorf("List has not been shuffled")
 	}
 }
 

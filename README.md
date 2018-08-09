@@ -3,7 +3,7 @@ API for interaction generating passwords
 
 ## Description
 This is an API that will generate passwords.   
-The passwords will be alphanumerical  containing letters, numbers and special characters.  
+The passwords will be alphanumerical containing letters, numbers and special characters.  
 There is only one endpoint which is a GET endpoint that will provide multiple passwords.   
 The endpoint is defined as ```/password/{min_length}/{no_of_numerical}/{no_of_symbols}/{no_of_passwords}```.   
 As you can see you have to provide the minimum length of the generated passwords, the number of numerical characters,   
@@ -13,6 +13,8 @@ the number of special characters/symbols and the number of passwords you want to
 Just run ```make docker``` which will run a docker instance on your machine.   
 Access the api through the docker ip.   
 
+## Testing 
+Just run ```make test``` to run the unit tests.   
 
 ## Code explanation
 
@@ -69,7 +71,7 @@ When we convert a vowel to number we subtract the length of the `numbers` slice
 so we end up with exactly the same number of integers defined by the user.   
 At the end we join all the slices in one resulting slice. After that the resulting slice is shuffled.   
 The complexity of the algorithm is 3 O(n).   
-Once we iterate through the full length when we assign the values of the separate slices,   
-the second time is when we do the appending of the slices   
-and the third time is when we shuffle the resulting slice
+The first time is when we iterate through the full length and we assign the values of the separate slices,   
+the second time is when we do the appending/merging of the slices   
+and the third time is when we shuffle the resulting slice.
 

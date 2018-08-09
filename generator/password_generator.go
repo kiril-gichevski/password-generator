@@ -77,11 +77,9 @@ func isVowel(Letter string) bool {
 
 func shuffle(slice []string) {
 	r := rand.New(rand.NewSource(time.Now().Unix()))
-	for len(slice) > 0 {
-		n := len(slice)
-		randIndex := r.Intn(n)
-		slice[n-1], slice[randIndex] = slice[randIndex], slice[n-1]
-		slice = slice[:n-1]
+	for i := range slice {
+		j := r.Intn(i + 1)
+		slice[i], slice[j] = slice[j], slice[i]
 	}
 }
 
