@@ -19,7 +19,7 @@ func GeneratePassword(minLength int, numbers int, specialChars int) (string, err
 	LettersLength := len(letters)
 	for i := 0; i < minLength; i++ {
 		Letter := string(letters[rand.Intn(LettersLength)])
-		if convertVowelToNumber(numbers, Letter) {
+		if convertVowelToNumber(rand.Intn(2), numbers, Letter) {
 			lettersList[i] = strconv.Itoa(rand.Intn(10))
 			numbers--
 		} else {
@@ -49,8 +49,8 @@ func GeneratePassword(minLength int, numbers int, specialChars int) (string, err
 
 }
 
-func convertVowelToNumber(numbers int, letter string) bool {
-	if rand.Intn(2) == 1 && numbers > 0 && isVowel(letter) {
+func convertVowelToNumber(randomNumber int, numbers int, letter string) bool {
+	if randomNumber == 1 && numbers > 0 && isVowel(letter) {
 		return true
 	}
 	return false

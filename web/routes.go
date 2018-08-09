@@ -14,6 +14,15 @@ type Route struct {
 
 type Routes []Route
 
+var routes = Routes{
+	Route{
+		"passwords",
+		"GET",
+		"/password/{min}/{numbers}/{symbols}/{passwords}",
+		GetPassword,
+	},
+}
+
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -26,13 +35,4 @@ func NewRouter() *mux.Router {
 	}
 
 	return router
-}
-
-var routes = Routes{
-	Route{
-		"passwords",
-		"GET",
-		"/password/{min}/{numbers}/{symbols}/{passwords}",
-		GetPassword,
-	},
 }
